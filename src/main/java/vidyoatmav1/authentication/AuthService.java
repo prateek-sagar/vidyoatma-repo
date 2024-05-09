@@ -3,6 +3,7 @@ package vidyoatmav1.authentication;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import vidyoatmav1.authconfig.JWTService;
 import vidyoatmav1.model.VAUserByEmail;
 import vidyoatmav1.repositories.UsersByEmailRepository;
 
