@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: Vidyoatma
+  cassandra:
+    keyspace-name: initial
+    username: OhzNcuiHKCZDOeLrIowmfqXW
+    password: otq9Qk75K,uDFjDh5c.XcyxT3HaM40RcCipA42HkDs.HFZCC4_NusqA42bETK6.qYCyZN1+B613qDZgK-UXLY2Wg-j3yDsYtZZDwavrGjWhpmNHxZeTS5sqYubhsI0Yh
+    schema-action: create-if-not-exists
+    request:
+      timeout: 10s
+    connection:
+      connect-timeout: 10s
+      init-query-timeout: 10s
+
+datastax.astra:
+  secure-bundle-connect: secure-connect.zip
+
+astra.db:
+  id: 2ba4c9cc-a07f-43a2-9f90-f2f5a18a5b97
+  region: us-east1
+  keyspace: initial
+  application.token: AstraCS:OhzNcuiHKCZDOeLrIowmfqXW:4107c2e97f7c40f35f0eb9a1f7ea8142cd638c1917b25dc0dd4aafb9dfb51d6d
