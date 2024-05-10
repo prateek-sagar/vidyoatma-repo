@@ -9,7 +9,7 @@ import vidyoatmav1.model.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    private String loginprincipal;
-    private String loginPassword;
+    private String username;
+    private String password;
     private Role role;
 }

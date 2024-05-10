@@ -16,11 +16,11 @@ public class AuthService {
     public AuthResponse save(RegisterRequest registerRequest) {
         var emailUser = VAUserByEmail
                 .builder()
-                .loginpass(registerRequest.getLoginprincipal())
-                .loginpass(registerRequest.getLoginPassword())
+                .loginemail(registerRequest.getUsername())
+                .loginpass(registerRequest.getPassword())
                 .role(registerRequest.getRole())
                 .build();
-
+        System.out.println(emailUser);
         usersEmailrepo.save(emailUser);
         var token = jwtService.generateToken(emailUser);
         return AuthResponse.builder().token(token).build();
