@@ -56,7 +56,7 @@ public class VAUserByEmail implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
+        return true;
     }
 
     @Override
