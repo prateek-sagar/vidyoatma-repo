@@ -20,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/institution")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthResponse> register(@RequestBody InstitutionRegisterRequest registerRequest) {
         return ResponseEntity.ok(authService.saveInstitution(registerRequest));
     }
 }
