@@ -22,6 +22,8 @@ public class TeachersByUUID {
     @PrimaryKeyColumn(value = "teacher_id", type = PrimaryKeyType.PARTITIONED)
     private UUID teacherId;
     @Column
+    private UUID institutionId;
+    @Column
     private PersonBasicInfo basicInfo;
     @Column
     private List<String> subjects;
