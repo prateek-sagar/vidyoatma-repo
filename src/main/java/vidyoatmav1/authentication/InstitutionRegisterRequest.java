@@ -6,7 +6,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vidyoatmav1.model.Role;
+import vidyoatmav1.model.tablehelpers.Role;
 
 @Data
 @AllArgsConstructor

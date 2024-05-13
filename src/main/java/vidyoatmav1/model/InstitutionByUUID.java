@@ -12,13 +12,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vidyoatmav1.model.tablehelpers.Address;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
 @Builder
-public class Institution {
+public class InstitutionByUUID {
 
     @PrimaryKeyColumn(value = "insitution_id", type = PrimaryKeyType.PARTITIONED)
     private UUID institutionId;

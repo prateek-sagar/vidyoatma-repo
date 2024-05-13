@@ -1,4 +1,4 @@
-package vidyoatmav1.model;
+package vidyoatmav1.model.tablehelpers;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 

@@ -4,8 +4,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import vidyoatmav1.model.Address;
 import vidyoatmav1.model.StudentByInstitutionId;
+import vidyoatmav1.model.tablehelpers.Address;
 import vidyoatmav1.requests.AddStudentRequest;
 import vidyoatmav1.responses.AfterAddStudentResponse;
 import vidyoatmav1.support.GenerateAuthentication;

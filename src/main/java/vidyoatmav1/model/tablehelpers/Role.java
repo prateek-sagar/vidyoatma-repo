@@ -1,4 +1,4 @@
-package vidyoatmav1.model;
+package vidyoatmav1.model.tablehelpers;
 
 public enum Role {
     ADMIN,

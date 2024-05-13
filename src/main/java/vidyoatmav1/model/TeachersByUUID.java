@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vidyoatmav1.model.tablehelpers.PersonBasicInfo;
 
 @Data
 @Builder

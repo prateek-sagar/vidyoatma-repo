@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import vidyoatmav1.authconfig.JWTService;
-import vidyoatmav1.model.Address;
 import vidyoatmav1.model.AuthenticationByEmail;
 import vidyoatmav1.model.Institution;
+import vidyoatmav1.model.tablehelpers.Address;
 import vidyoatmav1.repositories.UsersByEmailRepository;
 
 @Service

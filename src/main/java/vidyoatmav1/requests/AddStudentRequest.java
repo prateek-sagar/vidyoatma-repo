@@ -3,7 +3,7 @@ package vidyoatmav1.requests;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vidyoatmav1.model.Section;
+import vidyoatmav1.model.tablehelpers.Section;
 
 @Data
 @AllArgsConstructor
