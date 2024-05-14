@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import vidyoatmav1.requests.AddStudentRequest;
-import vidyoatmav1.responses.AfterAddStudentResponse;
+import vidyoatmav1.responses.AfterAddResponse;
 import vidyoatmav1.service.StudentService;
 
 @RestController
@@ -18,7 +18,7 @@ public class StudentRelatedController {
     private final StudentService studentService;
 
     @PostMapping("/add")
-    public ResponseEntity<AfterAddStudentResponse> saveStudent(@RequestBody AddStudentRequest addrequest) {
+    public ResponseEntity<AfterAddResponse> saveStudent(@RequestBody AddStudentRequest addrequest) {
         return ResponseEntity.ok(studentService.save(addrequest));
     }
 }

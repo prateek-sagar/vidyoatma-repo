@@ -4,10 +4,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import vidyoatmav1.model.StudentByInstitutionId;
 import vidyoatmav1.model.tablehelpers.Address;
 import vidyoatmav1.requests.AddStudentRequest;
-import vidyoatmav1.responses.AfterAddStudentResponse;
+import vidyoatmav1.responses.AfterAddResponse;
 import vidyoatmav1.support.GenerateAuthentication;
 
 @Service
@@ -15,7 +14,7 @@ import vidyoatmav1.support.GenerateAuthentication;
 public class StudentService {
         private final GenerateAuthentication generate;
 
-        public AfterAddStudentResponse save(AddStudentRequest addrequest) {
+        public AfterAddResponse save(AddStudentRequest addrequest) {
                 UUID _id = UUID.randomUUID();
                 Address _address = new Address(addrequest.getBuildingno(), addrequest.getLocality(),
                                 addrequest.getCity(),
@@ -35,7 +34,7 @@ public class StudentService {
                 String credentials = generate.generateCredentials("DAV", addrequest.getAdmissionno(),
                                 addrequest.getFirstname());
                 // need to save in table
-                return AfterAddStudentResponse
+                return AfterAddResponse
                                 .builder()
                                 .username(credentials)
                                 .password(credentials)

@@ -12,12 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
-import vidyoatmav1.repositories.AuthenticationByEmailRepository;
+import vidyoatmav1.repositories.AuthenticationByEmailOrNameRepository;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final AuthenticationByEmailRepository userEmailRepo;
+    private final AuthenticationByEmailOrNameRepository userEmailRepo;
 
     @Bean
     UserDetailsService userDetailsService() {
@@ -43,6 +43,4 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // required to check whether the username is equal to email or not by an
-    // function
 }

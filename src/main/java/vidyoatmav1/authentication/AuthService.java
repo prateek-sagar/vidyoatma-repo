@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import vidyoatmav1.authconfig.JWTService;
-import vidyoatmav1.model.AuthenticationByEmail;
-import vidyoatmav1.model.Institution;
+import vidyoatmav1.model.AuthenticationByEmailOrName;
+import vidyoatmav1.model.InstitutionByUUID;
+import vidyoatmav1.model.InstitutionByUUIDAndName;
 import vidyoatmav1.model.tablehelpers.Address;
-import vidyoatmav1.repositories.AuthenticationByEmailRepository;
+import vidyoatmav1.repositories.AuthenticationByEmailOrNameRepository;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-        private final AuthenticationByEmailRepository usersEmailrepo;
+        private final AuthenticationByEmailOrNameRepository usersnamerepo;
         private final JWTService jwtService;
         private final AuthenticationManager authenticationManager;
         private final PasswordEncoder passwordEncoder;
@@ -25,9 +26,9 @@ public class AuthService {
         public AuthResponse saveInstitution(InstitutionRegisterRequest registerRequest) {
                 UUID id = UUID.randomUUID();
 
-                var emailUser = AuthenticationByEmail
+                var emailUser = AuthenticationByEmailOrName
                                 .builder()
-                                .loginemail(registerRequest.getUsername())
+                                .loginEmailOrName(registerRequest.getUsername())
                                 .loginpass(passwordEncoder.encode(registerRequest.getPassword()))
                                 .role(registerRequest.getRole())
                                 .id(id)
@@ -39,7 +40,7 @@ public class AuthService {
                                 registerRequest.getDistrict(),
                                 registerRequest.getState(),
                                 registerRequest.getCountry());
-                var institution = Institution
+                var institution = InstitutionByUUIDAndName
                                 .builder()
                                 .institutionId(id)
                                 .institutionName(registerRequest.getName())
@@ -59,7 +60,7 @@ public class AuthService {
                                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                                                 authRequest.getPassword()));
 
-                var user = usersEmailrepo.findByLoginEmailOrName(authRequest.getUsername()).orElseThrow();
+                var user = usersnamerepo.findByLoginEmailOrName(authRequest.getUsername()).orElseThrow();
                 var token = jwtService.generateToken(user);
                 return AuthResponse.builder().token(token).build();
         }
