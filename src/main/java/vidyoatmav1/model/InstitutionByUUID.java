@@ -1,6 +1,5 @@
 package vidyoatmav1.model;
 
-import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
@@ -13,22 +12,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vidyoatmav1.model.tablehelpers.Address;
+import vidyoatmav1.model.tablehelpers.OrganizationBasicInfo;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
 @Builder
+@Table(value = "institutions_by_uuid")
 public class InstitutionByUUID {
 
     @PrimaryKeyColumn(value = "insitution_id", type = PrimaryKeyType.PARTITIONED)
     private UUID institutionId;
-    @PrimaryKeyColumn(value = "name", type = PrimaryKeyType.PARTITIONED)
-    private String institutionName;
+    @Column
+    private OrganizationBasicInfo basicInfo;
+    @Column
+    private String abreviate;
     @Column
     private Address address;
-    @Column
-    private Date establishmentDate;
     @Column
     private int lowerStandard;
     @Column
