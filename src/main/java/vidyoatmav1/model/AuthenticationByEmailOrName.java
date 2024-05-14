@@ -22,10 +22,10 @@ import vidyoatmav1.model.tablehelpers.Role;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(value = "authentication_by_email")
-public class AuthenticationByEmail implements UserDetails {
-    @PrimaryKeyColumn(value = "loginemail", type = PrimaryKeyType.PARTITIONED)
-    private String loginemail;
+@Table(value = "authentication_by_email_or_name")
+public class AuthenticationByEmailOrName implements UserDetails {
+    @PrimaryKeyColumn(value = "login_email_or_name", type = PrimaryKeyType.PARTITIONED)
+    private String loginEmailOrName;
     @Column(value = "loginpass")
     private String loginpass;
     @Column
@@ -45,7 +45,7 @@ public class AuthenticationByEmail implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.loginemail;
+        return this.loginEmailOrName;
     }
 
     @Override

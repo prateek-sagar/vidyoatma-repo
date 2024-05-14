@@ -12,16 +12,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
-import vidyoatmav1.repositories.UsersByEmailRepository;
+import vidyoatmav1.repositories.AuthenticationByEmailRepository;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UsersByEmailRepository userEmailRepo;
+    private final AuthenticationByEmailRepository userEmailRepo;
 
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> userEmailRepo.findByLoginemail(username)
+        return username -> userEmailRepo.findByLoginEmailOrName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username for the " + username + " is not found"));
     }
 

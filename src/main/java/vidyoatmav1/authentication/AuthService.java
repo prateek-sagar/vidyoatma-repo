@@ -12,12 +12,12 @@ import vidyoatmav1.authconfig.JWTService;
 import vidyoatmav1.model.AuthenticationByEmail;
 import vidyoatmav1.model.Institution;
 import vidyoatmav1.model.tablehelpers.Address;
-import vidyoatmav1.repositories.UsersByEmailRepository;
+import vidyoatmav1.repositories.AuthenticationByEmailRepository;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-        private final UsersByEmailRepository usersEmailrepo;
+        private final AuthenticationByEmailRepository usersEmailrepo;
         private final JWTService jwtService;
         private final AuthenticationManager authenticationManager;
         private final PasswordEncoder passwordEncoder;
@@ -59,7 +59,7 @@ public class AuthService {
                                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                                                 authRequest.getPassword()));
 
-                var user = usersEmailrepo.findByLoginemail(authRequest.getUsername()).orElseThrow();
+                var user = usersEmailrepo.findByLoginEmailOrName(authRequest.getUsername()).orElseThrow();
                 var token = jwtService.generateToken(user);
                 return AuthResponse.builder().token(token).build();
         }
