@@ -6,8 +6,7 @@ import java.util.UUID;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import vidyoatmav1.model.InstitutionByUUID;
-import vidyoatmav1.model.key.InstitutionKey;
 
-public interface InstitutionByUUIDRepository extends CassandraRepository<InstitutionByUUID, InstitutionKey> {
+public interface InstitutionByUUIDRepository extends CassandraRepository<InstitutionByUUID, UUID> {
     Optional<InstitutionByUUID> findByInstitutionId(UUID institutionId);
 }

@@ -1,10 +1,16 @@
 package vidyoatmav1.service;
 
+import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import vidyoatmav1.model.tablehelpers.Address;
+import vidyoatmav1.model.AuthenticationByEmailOrName;
+import vidyoatmav1.model.InstitutionByUUID;
+import vidyoatmav1.model.tablehelpers.Role;
+import vidyoatmav1.repositories.InstitutionByUUIDRepository;
 import vidyoatmav1.requests.AddStudentRequest;
 import vidyoatmav1.responses.AfterAddResponse;
 import vidyoatmav1.support.GenerateAuthentication;
@@ -13,31 +19,25 @@ import vidyoatmav1.support.GenerateAuthentication;
 @RequiredArgsConstructor
 public class StudentService {
         private final GenerateAuthentication generate;
+        private final SaveToTables saveToTables;
+        private final InstitutionByUUIDRepository institutionByIdrepo;
+        private final PasswordEncoder passwordEncoder;
 
         public AfterAddResponse save(AddStudentRequest addrequest) {
                 UUID _id = UUID.randomUUID();
-                Address _address = new Address(addrequest.getBuildingno(), addrequest.getLocality(),
-                                addrequest.getCity(),
-                                addrequest.getDistrict(), addrequest.getState(), addrequest.getCountry());
-                System.out.println(addrequest);
-                var student = StudentByInstitutionId.builder()
-                                .instiutionId(_id)
-                                .firstName(addrequest.getFirstname())
-                                .secondName(addrequest.getSecondname())
-                                .studentId(_id)
-                                .admissionNo(addrequest.getAdmissionno())
-                                .address(_address)
-                                .standards(addrequest.getStandards())
-                                .roleNumber(addrequest.getRolenumber())
-                                .section(addrequest.getSection());
-                System.out.println(student);
-                String credentials = generate.generateCredentials("DAV", addrequest.getAdmissionno(),
-                                addrequest.getFirstname());
-                // need to save in table
-                return AfterAddResponse
-                                .builder()
-                                .username(credentials)
-                                .password(credentials)
+                Optional<InstitutionByUUID> institution = institutionByIdrepo
+                                .findByInstitutionId(addrequest.getInstitutionid());
+                String abreviate = institution.get().getAbreviate();
+                String username = generate.generateCredentials(abreviate, addrequest.getAdmissionno(),
+                                addrequest.getBasic().getFirstname());
+                AuthenticationByEmailOrName user = AuthenticationByEmailOrName.builder()
+                                .loginprincipal(username)
+                                .loginpass(passwordEncoder.encode(username))
+                                .id(_id)
+                                .role(Role.STUDENT)
                                 .build();
+                saveToTables.saveStudents(_id, addrequest);
+                System.out.println(user);
+                return null;
         }
 }

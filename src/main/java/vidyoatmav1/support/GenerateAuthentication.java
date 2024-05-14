@@ -31,7 +31,7 @@ public class GenerateAuthentication {
         /*
          * check for username in the username table
          */
-        Optional<AuthenticationByEmailOrName> user = authenticationUsername.findByLoginEmailOrName(username);
+        Optional<AuthenticationByEmailOrName> user = authenticationUsername.findByLoginprincipal(username);
         System.out.println(user);
         if (user.isPresent())
             return true;

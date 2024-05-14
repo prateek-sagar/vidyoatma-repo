@@ -31,7 +31,7 @@ public class StudentByInstitutionIdAndName {
     @Column
     private int standard;
     @Column
-    private int roleNumber;
-    @Column
     private Section section;
+    @Column
+    private int roleNumber;
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vidyoatmav1.model.tablehelpers.Role;
+import vidyoatmav1.requests.AddressRequest;
 
 @Data
 @AllArgsConstructor
@@ -17,12 +18,8 @@ public class InstitutionRegisterRequest {
     private Role role;
     private UUID id;
     private String name;
-    private String building_no;
-    private String locality;
-    private String city;
-    private String district;
-    private String state;
-    private String country;
+    private String abreviate;
+    private AddressRequest address;
     private Date establishmentDate;
     private int lowerStandard;
     private int higherStandard;

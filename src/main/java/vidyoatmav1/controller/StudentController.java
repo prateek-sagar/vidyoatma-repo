@@ -14,7 +14,7 @@ import vidyoatmav1.service.StudentService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/student")
-public class StudentRelatedController {
+public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/add")

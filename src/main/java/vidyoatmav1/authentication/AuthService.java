@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import vidyoatmav1.authconfig.JWTService;
 import vidyoatmav1.model.AuthenticationByEmailOrName;
-import vidyoatmav1.model.InstitutionByUUID;
-import vidyoatmav1.model.InstitutionByUUIDAndName;
-import vidyoatmav1.model.tablehelpers.Address;
 import vidyoatmav1.repositories.AuthenticationByEmailOrNameRepository;
+import vidyoatmav1.service.SaveToTables;
 
 @Service
 @RequiredArgsConstructor
@@ -22,37 +20,24 @@ public class AuthService {
         private final JWTService jwtService;
         private final AuthenticationManager authenticationManager;
         private final PasswordEncoder passwordEncoder;
+        private final SaveToTables saveToTables;
 
         public AuthResponse saveInstitution(InstitutionRegisterRequest registerRequest) {
-                UUID id = UUID.randomUUID();
-
-                var emailUser = AuthenticationByEmailOrName
-                                .builder()
-                                .loginEmailOrName(registerRequest.getUsername())
+                UUID _id = UUID.randomUUID();
+                System.out.println(registerRequest);
+                // create user
+                AuthenticationByEmailOrName user = AuthenticationByEmailOrName.builder()
+                                .loginprincipal(registerRequest.getUsername())
                                 .loginpass(passwordEncoder.encode(registerRequest.getPassword()))
-                                .role(registerRequest.getRole())
-                                .id(id)
-                                .build();
-                Address _address = new Address(
-                                registerRequest.getBuilding_no(),
-                                registerRequest.getLocality(),
-                                registerRequest.getCity(),
-                                registerRequest.getDistrict(),
-                                registerRequest.getState(),
-                                registerRequest.getCountry());
-                var institution = InstitutionByUUIDAndName
-                                .builder()
-                                .institutionId(id)
-                                .institutionName(registerRequest.getName())
-                                .address(_address)
-                                .establishmentDate(registerRequest.getEstablishmentDate())
-                                .lowerStandard(registerRequest.getLowerStandard())
-                                .higherStandard(registerRequest.getHigherStandard());
-                System.out.println(emailUser);
-                System.out.println(institution);
-                // usersEmailrepo.save(emailUser);
-                // var token = jwtService.generateToken(emailUser);
-                return null;
+                                .id(_id)
+                                .role(registerRequest.getRole()).build();
+
+                saveToTables.saveInstitution(_id, registerRequest);
+                System.out.println(user);
+                // need to save data in users table
+                usersnamerepo.save(user);
+                var token = jwtService.generateToken(user);
+                return AuthResponse.builder().token(token).build();
         }
 
         public AuthResponse authenticate(AuthRequest authRequest) {
@@ -60,7 +45,7 @@ public class AuthService {
                                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                                                 authRequest.getPassword()));
 
-                var user = usersnamerepo.findByLoginEmailOrName(authRequest.getUsername()).orElseThrow();
+                var user = usersnamerepo.findByLoginprincipal(authRequest.getUsername()).orElseThrow();
                 var token = jwtService.generateToken(user);
                 return AuthResponse.builder().token(token).build();
         }
