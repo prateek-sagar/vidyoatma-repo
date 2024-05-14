@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class PersonBasicInfo {
     private String firstName;
     private String lastName;
-    private Address address;
     private Date dateOfBirth;
     private boolean isFemale;
 }
