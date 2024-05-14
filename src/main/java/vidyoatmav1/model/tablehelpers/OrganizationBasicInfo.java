@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class OrganizationBasicInfo {
     private String name;
     private Date establishmentDate;
-    private Address address;
 }
