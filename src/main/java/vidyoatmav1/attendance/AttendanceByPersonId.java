@@ -1,6 +1,6 @@
 package vidyoatmav1.attendance;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.data.cassandra.core.cql.Ordering;
@@ -23,7 +23,7 @@ public class AttendanceByPersonId {
     @PrimaryKeyColumn(value = "personId", type = PrimaryKeyType.PARTITIONED)
     private UUID personId;
     @PrimaryKeyColumn(value = "date", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.ASCENDING)
-    private Date date;
+    private LocalDate date;
     @Column
     private boolean isAbsent;
 }
