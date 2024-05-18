@@ -20,3 +20,10 @@ astra.db:
   region: us-east1
   keyspace: initial
   application.token: AstraCS:OhzNcuiHKCZDOeLrIowmfqXW:4107c2e97f7c40f35f0eb9a1f7ea8142cd638c1917b25dc0dd4aafb9dfb51d6d
+application:
+  security:
+    jwt:
+      security-key: d2168c548579c06063b85e82d2a9551a2d3695808e701c9a02ccd44264c0f6b0
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
