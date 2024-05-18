@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,15 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class JWTService {
-    private static final String key = "d2168c548579c06063b85e82d2a9551a2d3695808e701c9a02ccd44264c0f6b0";
+
+    @Value("${application.security.jwt.security-key}")
+    private String key;
+
+    @Value("${application.security.jwt.expiration}")
+    private long jwtExpiration;
+
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshExpiration;
 
     /*
      * Method to extract the username from
@@ -71,12 +80,24 @@ public class JWTService {
     public String generateToken(
             Map<String, Object> extractClaims,
             UserDetails userDetails) {
+        return buildToken(extractClaims, userDetails, jwtExpiration);
+    }
+
+    /*
+     * Method to generate referesh token
+     */
+    public String generateRefreshToken(Map<String, Object> extractClaims,
+            UserDetails userDetails) {
+        return buildToken(extractClaims, userDetails, refreshExpiration);
+    }
+
+    private String buildToken(Map<String, Object> extractClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
                 .claims(extractClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigninKey())
                 .compact();
     }
