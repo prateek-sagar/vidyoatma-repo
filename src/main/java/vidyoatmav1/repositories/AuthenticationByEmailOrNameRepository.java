@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface AuthenticationByEmailOrNameRepository
         extends CassandraRepository<AuthenticationByEmailOrName, String> {
     Optional<AuthenticationByEmailOrName> findByLoginprincipal(String loginprincipal);
+
+    boolean existsByLoginprincipal(String loginprincipal);
 }
