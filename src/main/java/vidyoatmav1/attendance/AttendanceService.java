@@ -18,8 +18,8 @@ public class AttendanceService {
     public ResponseEntity<Void> save(AttendanceRequest request) {
         System.out.println(request);
 
-        // savePresent(request.getPresents());
-        // saveAbsent(request.getAbsents());
+        savePresent(request.getPresents());
+        saveAbsent(request.getAbsents());
         // attendanceRepo.save(null);
         return ResponseEntity.ok().build();
     }
