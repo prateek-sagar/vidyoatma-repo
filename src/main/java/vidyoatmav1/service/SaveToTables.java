@@ -37,6 +37,7 @@ public class SaveToTables {
         private final TeacherInstitutionIdAndNameRepository teacherNameRepo;
         private final StudentByUUIDRepository studentIdRepo;
         private final StudentByNameRepository studentNameRepo;
+        private final AllocationService allocationService;
 
         public void saveInstitution(UUID id, InstitutionRegisterRequest registerRequest) {
                 OrganizationBasicInfo basicInfo = OrganizationBasicInfo.builder()
@@ -86,6 +87,7 @@ public class SaveToTables {
                                 .build();
                 teacherIdRepo.save(teacherById);
                 teacherNameRepo.save(teacherByName);
+                allocationService.initialTeacherSchedule(id, addrequest);
         }
 
         public void saveStudents(UUID id, AddStudentRequest addrequest) {
