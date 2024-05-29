@@ -7,12 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class CookieController {
-    public void sentHttpOnlyCookie(HttpServletResponse response, String name, String value) {
+    public void sentHttpOnlyCookie(HttpServletResponse response, String name, String value, int age) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
-        // cookie.setHttpOnly(true);
+        cookie.setHttpOnly(true);
         cookie.setSecure(false);
-        cookie.setMaxAge(1000 * 60 * 60 * 24);
+        cookie.setMaxAge(age);
         response.addCookie(cookie);
     }
 }
