@@ -31,7 +31,10 @@ public class VidyoatmaApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/v1/auth/**").allowedOrigins("http://localhost:5173");
+				registry.addMapping("/api/v1/auth/**")
+						.allowedOrigins("http://localhost:5173")
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}
