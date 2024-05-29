@@ -1,17 +1,16 @@
 package vidyoatmav1.course;
 
-import java.util.UUID;
+import java.util.List;
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.Embedded.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vidyoatmav1.model.tablehelpers.Section;
+import vidyoatmav1.course.key.TrackCourseKey;
 
 @Data
 @AllArgsConstructor
@@ -19,16 +18,11 @@ import vidyoatmav1.model.tablehelpers.Section;
 @Builder
 @Table("track_course")
 public class TrackCourse {
-    @PrimaryKeyColumn(value = "institution_id", type = PrimaryKeyType.PARTITIONED)
-    private UUID institutionId;
-
-    private UUID teaherId;
-    private String teacherName;
-    private String subjectName;
-    private int ChaptersToBeStudy;
-    private int ChaptersStudied;
-    private int standard;
-    @Nullable
-    private Section section;
-    // what we study today
+    @PrimaryKey
+    private TrackCourseKey key;
+    @Column(value = "num_chapters")
+    private float numChapters;
+    @Column(value = "num_read_chapters")
+    private float numReadChapters;
+    private List<Float> progress;
 }
