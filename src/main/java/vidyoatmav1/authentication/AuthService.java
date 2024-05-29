@@ -42,8 +42,8 @@ public class AuthService {
                         // need to save data in users table
                         var token = jwtService.generateToken(user);
                         var refreshToken = jwtService.generateRefreshToken(user);
-                        cookieController.sentHttpOnlyCookie(response, "access-token", token);
-                        cookieController.sentHttpOnlyCookie(response, "refresh-token", refreshToken);
+                        cookieController.sentHttpOnlyCookie(response, "access-token", token, 24 * 60 * 60);
+                        cookieController.sentHttpOnlyCookie(response, "refresh-token", refreshToken, 24 * 60 * 60 * 7);
                         return AuthResponse.builder().resp(token).build();
                 } else {
                         System.out.println("Exists");
@@ -51,13 +51,17 @@ public class AuthService {
                 }
         }
 
-        public AuthResponse authenticate(AuthRequest authRequest) {
+        public AuthResponse authenticate(AuthRequest authRequest, HttpServletResponse response) {
                 authenticationManager.authenticate(
                                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                                                 authRequest.getPassword()));
 
                 var user = usersnamerepo.findByLoginprincipal(authRequest.getUsername()).orElseThrow();
+                System.out.println(user);
                 var token = jwtService.generateToken(user);
+                var refreshToken = jwtService.generateRefreshToken(user);
+                cookieController.sentHttpOnlyCookie(response, "access-token", token, 24 * 60 * 60);
+                cookieController.sentHttpOnlyCookie(response, "refresh-token", refreshToken, 24 * 60 * 60 * 7);
                 return AuthResponse.builder().resp(token).build();
         }
 }
