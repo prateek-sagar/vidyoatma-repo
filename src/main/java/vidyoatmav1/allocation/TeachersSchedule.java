@@ -29,5 +29,7 @@ public class TeachersSchedule {
     @Column
     private String name;
     @Column
-    private List<Integer> schedule;
+    private List<Integer> subjects;
+    @Column
+    private List<Integer> standards;
 }
