@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,27 @@ public class AllocationService {
     private final TeacherInstitutionIdAndNameRepository teacherNameRepo;
     private final TimeTableRepository timeTableRepository;
 
+    @Value("${application.schedule.capacity}")
+    private int capacity;
+
     public void initialTeacherSchedule(UUID id, AddTeacherRequest request) {
 
-        List<Integer> schedule_arr = new ArrayList<Integer>(48);
-
-        for (int i = 0; i < schedule_arr.size(); i++) {
-            schedule_arr.add(i, -1);
+        List<Integer> schedule_subject = new ArrayList<Integer>(capacity);
+        List<String> schedule_standard = new ArrayList<String>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            schedule_subject.add(i, -1);
+            schedule_standard.add(i, "");
         }
+
+        // for (int )
 
         var _schedule = TeachersSchedule
                 .builder()
                 .institutionId(request.getInstitutionid())
                 .teacher(id)
                 .name(request.getBasic().getFirstname())
-                .schedule(schedule_arr)
+                .subjects(schedule_subject)
+                .standards(schedule_standard)
                 .build();
         scheduleRepository.save(_schedule);
     }
@@ -60,7 +68,7 @@ public class AllocationService {
                 .standard(request.getStandard())
                 .section(request.getSection())
                 .build()).get(0);
-        List<PeriodInfo> currentPeriodInfo = new ArrayList<PeriodInfo>(48);
+        List<PeriodInfo> currentPeriodInfo = new ArrayList<PeriodInfo>(capacity);
         if (currentTables != null) {
             currentPeriodInfo = currentTables.getPeriodInfo();
         }
@@ -95,18 +103,22 @@ public class AllocationService {
         String requestSubject = request.getSubject().toLowerCase();
         int subjectIndex = teacher.getSubjects().indexOf(requestSubject);
         List<TeachersSchedule> teachersSchedules = scheduleRepository.findByTeacher(teacher.getTeacherId());
-        List<Integer> schedule = teachersSchedules.get(0).getSchedule();
-
-        schedule.add(index, subjectIndex);
+        List<Integer> subject_schedule = teachersSchedules.get(0).getSubjects();
+        List<String> standard_schedule = teachersSchedules.get(0).getStandards();
+        subject_schedule.add(index, subjectIndex);
+        String standard_section = Integer.toString(request.getStandard()) + request.getSection().toString();
+        standard_schedule.add(index, standard_section);
         var teachers_schedule = TeachersSchedule
                 .builder()
                 .institutionId(request.getInstitution_id())
                 .teacher(teacher.getTeacherId())
                 .name(request.getTeacher())
-                .schedule(schedule)
+                .standards(standard_schedule)
+                .subjects(subject_schedule)
                 .build();
 
-        scheduleRepository.save(teachers_schedule);
+        System.out.println(teachers_schedule);
+        // scheduleRepository.save(teachers_schedule);
         return true;
     }
 
