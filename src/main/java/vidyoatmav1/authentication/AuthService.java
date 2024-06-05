@@ -1,5 +1,6 @@
 package vidyoatmav1.authentication;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,8 +22,9 @@ public class AuthService {
         private final JWTService jwtService;
         private final AuthenticationManager authenticationManager;
         private final PasswordEncoder passwordEncoder;
-        // private final SaveToTables saveToTables;
+        private final SaveToTables saveToTables;
         private final CookieController cookieController;
+        private final Features features;
 
         public AuthResponse saveInstitution(InstitutionRegisterRequest registerRequest, HttpServletResponse response) {
                 if (!usersnamerepo.existsByLoginprincipal(registerRequest.getUsername())) {
@@ -36,17 +38,22 @@ public class AuthService {
                                         .id(_id)
                                         .role(registerRequest.getRole()).build();
 
-                        // usersnamerepo.save(user);
-                        // saveToTables.saveInstitution(_id, registerRequest);
-                        System.out.println(user);
+                        usersnamerepo.save(user);
                         // need to save data in users table
+                        saveToTables.saveInstitution(_id, registerRequest);
+                        System.out.println(user);
+                        List<String> _features = features.getFeatures(registerRequest.getRole());
                         var token = jwtService.generateToken(user);
                         var refreshToken = jwtService.generateRefreshToken(user);
                         cookieController.sentHttpOnlyCookie(response, "access-token", token, 24 * 60 * 60);
                         cookieController.sentHttpOnlyCookie(response, "refresh-token", refreshToken, 24 * 60 * 60 * 7);
-                        return AuthResponse.builder().resp(token).build();
+                        return AuthResponse
+                                        .builder()
+                                        .id(_id)
+                                        .role(registerRequest.getRole())
+                                        .features(_features)
+                                        .build();
                 } else {
-                        System.out.println("Exists");
                         return null;
                 }
         }
@@ -58,10 +65,16 @@ public class AuthService {
 
                 var user = usersnamerepo.findByLoginprincipal(authRequest.getUsername()).orElseThrow();
                 System.out.println(user);
+                List<String> _features = features.getFeatures(user.getRole());
                 var token = jwtService.generateToken(user);
                 var refreshToken = jwtService.generateRefreshToken(user);
                 cookieController.sentHttpOnlyCookie(response, "access-token", token, 24 * 60 * 60);
                 cookieController.sentHttpOnlyCookie(response, "refresh-token", refreshToken, 24 * 60 * 60 * 7);
-                return AuthResponse.builder().resp(token).build();
+                return AuthResponse
+                                .builder()
+                                .id(user.getId())
+                                .role(user.getRole())
+                                .features(_features)
+                                .build();
         }
 }
