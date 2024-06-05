@@ -31,5 +31,6 @@ public class TeachersSchedule {
     @Column
     private List<Integer> subjects;
     @Column
-    private List<Integer> standards;
+    // it stores both standard and section
+    private List<String> standards;
 }
