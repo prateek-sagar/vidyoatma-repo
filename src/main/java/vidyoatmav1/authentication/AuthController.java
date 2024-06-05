@@ -1,6 +1,5 @@
 package vidyoatmav1.authentication;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,13 +25,10 @@ public class AuthController {
     }
 
     @PostMapping("/register/institution")
-    public HttpStatus register(@RequestBody InstitutionRegisterRequest registerRequest,
+    public ResponseEntity<AuthResponse> register(@RequestBody InstitutionRegisterRequest registerRequest,
             HttpServletResponse response) {
 
         var resp = authService.saveInstitution(registerRequest, response);
-        if (resp == null) {
-            return HttpStatus.CONFLICT;
-        }
-        return HttpStatus.CREATED;
+        return ResponseEntity.ok(resp);
     }
 }
