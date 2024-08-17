@@ -15,15 +15,15 @@ import vidyoatmav1.model.tablehelpers.Role;
 public class Features {
 
     private List<String> institution = Stream
-            .of("Student Portfolio", "Track Course", "Notifications", "Attendance", "Finance", "Allocation", "Tsunami")
+            .of("student_portfolio", "track_course", "notifications", "attendance", "finance", "allocation", "tsunami")
             .collect(Collectors.toList());
 
     private List<String> teachers = Stream
-            .of("Student Portfolio", "Track Course", "Notifications", "Attendance", "Finance", "Allocation", "Tsunami")
+            .of("student_portfolio", "track_course", "notifications", "attendance", "finance", "allocation", "tsunami")
             .collect(Collectors.toList());
 
     private List<String> student = Stream
-            .of("Portfolio", "Notifications", "Attendance", "Finance", "Allocation")
+            .of("portfolio", "notifications", "attendance", "finance", "allocation")
             .collect(Collectors.toList());
 
     public List<String> getFeatures(Role role) {
