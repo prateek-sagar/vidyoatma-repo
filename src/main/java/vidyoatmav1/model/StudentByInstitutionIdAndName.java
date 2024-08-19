@@ -11,8 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import vidyoatmav1.model.key.StudentByInstitutionKey;
-import vidyoatmav1.model.tablehelpers.PersonBasicInfo;
-import vidyoatmav1.model.tablehelpers.Section;
+import vidyoatmav1.model.tablehelpers.Student;
 
 @Data
 @Builder
@@ -23,15 +22,7 @@ public class StudentByInstitutionIdAndName {
     @PrimaryKey
     private StudentByInstitutionKey key;
     @Column
-    private PersonBasicInfo basicInfo;
-    @Column
     private UUID studentId;
     @Column
-    private int admissionNo;
-    @Column
-    private int standard;
-    @Column
-    private Section section;
-    @Column
-    private int roleNumber;
+    private Student student;
 }
