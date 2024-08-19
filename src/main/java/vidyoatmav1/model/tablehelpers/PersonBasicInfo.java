@@ -1,6 +1,6 @@
 package vidyoatmav1.model.tablehelpers;
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 public class PersonBasicInfo {
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private boolean isFemale;
 }
