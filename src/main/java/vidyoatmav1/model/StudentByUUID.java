@@ -13,9 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vidyoatmav1.model.tablehelpers.Address;
-import vidyoatmav1.model.tablehelpers.PersonBasicInfo;
-import vidyoatmav1.model.tablehelpers.Section;
+import vidyoatmav1.model.tablehelpers.Student;
 
 @Data
 @AllArgsConstructor
@@ -25,20 +23,13 @@ import vidyoatmav1.model.tablehelpers.Section;
 public class StudentByUUID {
     @PrimaryKeyColumn(value = "student_id", type = PrimaryKeyType.PARTITIONED)
     private UUID studentId;
-    @Column
-    private PersonBasicInfo basicInfo;
-    @Column
-    private int admissionNo;
+
     @Column
     private UUID institutionId;
     @Column
-    private Address address;
+    private Student student;
     @Column
-    private int standard;
-    @Column
-    private int roleNumber;
-    @Column
-    private Section section;
+    private String username;
     @Column
     @Nullable
     private String fatherName;
