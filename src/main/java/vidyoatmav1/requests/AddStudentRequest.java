@@ -11,11 +11,11 @@ import vidyoatmav1.model.tablehelpers.Section;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddStudentRequest {
-    private UUID institutionid;
-    private int admissionno;
+    private UUID institution_id;
+    private int admission_no;
     private PersonBasicInfoRequest basic;
     private AddressRequest address;
     private int standards;
-    private int rolenumber;
+    private int role_number;
     private Section section;
 }
