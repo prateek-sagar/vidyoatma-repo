@@ -21,7 +21,7 @@ import vidyoatmav1.model.tablehelpers.OrganizationBasicInfo;
 @Table(value = "institutions_by_uuid")
 public class InstitutionByUUID {
 
-    @PrimaryKeyColumn(value = "insitution_id", type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(value = "institution_id", type = PrimaryKeyType.PARTITIONED)
     private UUID institutionId;
     @Column
     private OrganizationBasicInfo basicInfo;
